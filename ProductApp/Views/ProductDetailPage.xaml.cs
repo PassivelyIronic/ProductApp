@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ProductApp.ViewModels;
 
 namespace ProductApp.Views
 {
     public partial class ProductDetailPage : ContentPage
     {
-        public ProductDetailPage()
+        public ProductDetailPage(ProductDetailViewModel viewModel)
         {
             InitializeComponent();
+            BindingContext = viewModel;
         }
     }
 }

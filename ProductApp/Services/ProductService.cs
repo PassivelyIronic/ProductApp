@@ -23,7 +23,6 @@ namespace ProductApp.Services
             _cacheService = cacheService;
             _connectivityService = connectivityService;
 
-            // Automatyczna synchronizacja co 5 minut
             _syncTimer = new Timer(async _ => await SyncProductsIfNeeded(),
                                   null,
                                   TimeSpan.Zero,

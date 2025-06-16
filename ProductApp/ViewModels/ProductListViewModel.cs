@@ -8,17 +8,19 @@ namespace ProductApp.ViewModels
     public class ProductListViewModel : BaseViewModel
     {
         private readonly ProductService _productService;
+        private readonly CartService _cartService;
         private ObservableCollection<Product> _products;
         private bool _isLoading;
 
-        public ProductListViewModel()
+        public ProductListViewModel(ProductService productService, CartService cartService)
         {
-            _productService = new ProductService();
+            _productService = productService;
+            _cartService = cartService;
             Products = new ObservableCollection<Product>();
             LoadProductsCommand = new Command(async () => await LoadProducts());
             ProductSelectedCommand = new Command<Product>(async (product) => await OnProductSelected(product));
 
-            _ = LoadProducts(); 
+            _ = LoadProducts();
         }
 
         public ObservableCollection<Product> Products

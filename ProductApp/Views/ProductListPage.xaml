@@ -3,16 +3,11 @@
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:ProductApp.ViewModels"
-             Title="Lista Produktow">
-
-    <ContentPage.BindingContext>
-        <viewmodels:ProductListViewModel />
-    </ContentPage.BindingContext>
+             Title="Lista Produktów">
 
     <Grid>
         <CollectionView ItemsSource="{Binding Products}"
-                        SelectionMode="Single"
-                        SelectedItem="{Binding ProductSelectedCommand}">
+                        SelectionMode="Single">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="15">
@@ -21,9 +16,13 @@
                                                   CommandParameter="{Binding .}" />
                         </Grid.GestureRecognizers>
 
-                        <Label Text="{Binding Name}" 
-                               FontSize="18" 
-                               VerticalOptions="Center" />
+                        <StackLayout>
+                            <Label Text="{Binding Name}" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" />
+                            <Label Text="{Binding Price, StringFormat='{0:C}'}" 
+                                   FontSize="16" />
+                        </StackLayout>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
