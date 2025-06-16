@@ -19,7 +19,7 @@ namespace ProductApp.ViewModels
             _productService = productService;
             _cartService = cartService;
             BackCommand = new Command(async () => await Shell.Current.GoToAsync("//ProductList"));
-            AddToCartCommand = new Command(async () => await AddToCart(), () => Product != null);
+            AddToCartCommand = new Command(async () => await AddToCart());
         }
 
         public string ProductId
@@ -35,7 +35,12 @@ namespace ProductApp.ViewModels
         public Product Product
         {
             get => _product;
-            set => SetProperty(ref _product, value);
+            set
+            {
+                SetProperty(ref _product, value);
+                // Poinformuj o zmianie stanu przycisku
+                ((Command)AddToCartCommand).ChangeCanExecute();
+            }
         }
 
         public bool IsLoading
@@ -44,7 +49,14 @@ namespace ProductApp.ViewModels
             set => SetProperty(ref _isLoading, value);
         }
 
+        public int Quantity
+        {
+            get => _quantity;
+            set => SetProperty(ref _quantity, value);
+        }
+
         public ICommand BackCommand { get; }
+        public ICommand AddToCartCommand { get; }
 
         private async Task LoadProduct()
         {
@@ -65,14 +77,6 @@ namespace ProductApp.ViewModels
                 IsLoading = false;
             }
         }
-
-        public int Quantity
-        {
-            get => _quantity;
-            set => SetProperty(ref _quantity, value);
-        }
-
-        public ICommand AddToCartCommand { get; }
 
         private async Task AddToCart()
         {
