@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="ProductApp.Views.ProductDetailPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:ProductApp.ViewModels"
+             Title="Szczegoly Produktu">
+
+    <ContentPage.BindingContext>
+        <viewmodels:ProductDetailViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid Padding="20">
+        <StackLayout IsVisible="{Binding Product, Converter={StaticResource IsNotNullConverter}}"
+                     Spacing="15">
+
+            <Label Text="Nazwa:" FontAttributes="Bold" />
+            <Label Text="{Binding Product.Name}" FontSize="18" />
+
+            <Label Text="Cena:" FontAttributes="Bold" />
+            <Label Text="{Binding Product.Price, StringFormat='{0:C}'}" FontSize="18" />
+
+            <Label Text="ID:" FontAttributes="Bold" />
+            <Label Text="{Binding Product.Id}" FontSize="16" />
+
+            <Button Text="Powr�t" 
+                    Command="{Binding BackCommand}"
+                    Margin="0,20,0,0" />
+        </StackLayout>
+
+        <ActivityIndicator IsVisible="{Binding IsLoading}" 
+                           IsRunning="{Binding IsLoading}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+    </Grid>
+</ContentPage>
