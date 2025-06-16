@@ -11,11 +11,15 @@ namespace ProductApp.ViewModels
         private Product _product;
         private bool _isLoading;
         private string _productId;
+        private readonly CartService _cartService;
+        private int _quantity = 1;
 
-        public ProductDetailViewModel()
+        public ProductDetailViewModel(ProductService productService, CartService cartService)
         {
-            _productService = new ProductService();
+            _productService = productService;
+            _cartService = cartService;
             BackCommand = new Command(async () => await Shell.Current.GoToAsync("//ProductList"));
+            AddToCartCommand = new Command(async () => await AddToCart(), () => Product != null);
         }
 
         public string ProductId
@@ -60,6 +64,26 @@ namespace ProductApp.ViewModels
             {
                 IsLoading = false;
             }
+        }
+
+        public int Quantity
+        {
+            get => _quantity;
+            set => SetProperty(ref _quantity, value);
+        }
+
+        public ICommand AddToCartCommand { get; }
+
+        private async Task AddToCart()
+        {
+            if (Product == null || Quantity <= 0) return;
+
+            _cartService.AddToCart(Product, Quantity);
+
+            await Application.Current.MainPage.DisplayAlert(
+                "Sukces",
+                $"Dodano {Product.Name} (x{Quantity}) do koszyka!",
+                "OK");
         }
     }
 }

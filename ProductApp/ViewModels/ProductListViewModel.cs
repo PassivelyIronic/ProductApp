@@ -18,7 +18,7 @@ namespace ProductApp.ViewModels
             LoadProductsCommand = new Command(async () => await LoadProducts());
             ProductSelectedCommand = new Command<Product>(async (product) => await OnProductSelected(product));
 
-            _ = LoadProducts(); // Załaduj produkty przy starcie
+            _ = LoadProducts(); 
         }
 
         public ObservableCollection<Product> Products
